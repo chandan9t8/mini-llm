@@ -3,7 +3,7 @@ dataset:
   stride: 128         #amount by which the window moves
   batch_size: 4       #number of samples per batch
 
-gpt_config:
+model:
   vocab_size: 50257
   emb_dim: 768
   n_layers: 12

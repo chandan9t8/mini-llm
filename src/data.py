@@ -66,10 +66,12 @@ def create_dataloader(txt, batch_size=4, max_length=256, stride=128, shuffle=Tru
                             num_workers=num_workers)
     return dataloader
 
+# create embeddings
+def get_tokens_embeddings(inputs, token_embedding_layer):
+    return token_embedding_layer(inputs)
 
-
-
-
-
+def get_positional_embeddings(seq_length, pos_embedding_layer):
+    pos_indices = torch.arange(seq_length).unsqueeze(0)
+    return pos_embedding_layer(pos_indices)
 
 
