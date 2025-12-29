@@ -32,7 +32,7 @@ def split_data(raw_text, split_ratio=0.9):
     return train_data, val_data
 
 # data class for creating datasets
-class createDataset(Dataset):
+class CreateDataset(Dataset):
     
     def __init__(self, raw_text, tokenizer, max_length, stride):
         self.input_tokens = []
@@ -56,7 +56,7 @@ def create_dataloader(txt, batch_size=4, max_length=256, stride=128, shuffle=Tru
     tokenizer = tiktoken.get_encoding("gpt2")
 
     # create instance of the data class
-    dataset = createDataset(txt, tokenizer, max_length, stride)
+    dataset = CreateDataset(txt, tokenizer, max_length, stride)
 
     # create the dataloader -- it a wrapper around the dataset
     dataloader = DataLoader(dataset,
@@ -65,13 +65,5 @@ def create_dataloader(txt, batch_size=4, max_length=256, stride=128, shuffle=Tru
                             drop_last=drop_last,
                             num_workers=num_workers)
     return dataloader
-
-# create embeddings
-def get_tokens_embeddings(inputs, token_embedding_layer):
-    return token_embedding_layer(inputs)
-
-def get_positional_embeddings(seq_length, pos_embedding_layer):
-    pos_indices = torch.arange(seq_length).unsqueeze(0)
-    return pos_embedding_layer(pos_indices)
 
 

@@ -1,9 +1,6 @@
 # Data preparation
 
-  
-
 `data.py`
-
 - load raw data in memory
 - divide the raw text into train & val
 - create batches of inputs and targets
@@ -13,13 +10,15 @@
 - create separate batches for train & val sets.
 - convert tokenIDs to embedding vectors.
 
+`modules.py`
+- 
 
 
 # Parameters and what they mean
 
 `context_length`
-- property of the model
-- defines the hard limit of the model
+- property of the model, defines the hard limit of the model
+- defines how far the model can look
 - it controls the size of the positional embedding matrix of the model
 
 `max_length`
@@ -32,11 +31,20 @@ usually both are set equal to reduce the complexity of the code.
 
 # Dimensions
 
-token embedding layer : `vocab_size` x `emb_dim`
+**data preparation**
+token embedding layer : `vocab_size` x `emb_dim` 
 positional embedding layer : `context_length` x `emb_dim`
+after converting tokenIDs to embeddings, one more dimension gets added : [4, 256] -> [4, 256, 768]
 
-  
-  
+
+**multihead attention module**
+- weight matrices Q, K, V : `dim_in` x `dim_out`
+    - `dim_in` --> `dims of the input token(token's embedding size)` 
+    - `dim_out` --> `dims of output we want`
+    - usually `dim_out = each head dim x num_heads`
+
+- Q, K, V matrices
+ 
   
   
   

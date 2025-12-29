@@ -9,3 +9,4 @@ model:
   n_layers: 12
   n_heads: 12
   context_length: 256   #how many tokens the model can see
+  dropout: 0.1
