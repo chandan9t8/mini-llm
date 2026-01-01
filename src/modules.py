@@ -116,7 +116,7 @@ class TransformerBlock(nn.Module):
         self.layer_norm1 = LayerNorm(cfg["emb_dim"])
         self.layer_norm2 = LayerNorm(cfg["emb_dim"])
         self.dropout = nn.Dropout(cfg["dropout"])
-        self.mha = MultiHeadAttention(cfg["n_heads"], cfg["dim_in"], cfg["dim_out"], cfg["context_length"], cfg["dropout"])
+        self.mha = MultiHeadAttention(cfg["n_heads"], cfg["emb_dim"], cfg["emb_dim"], cfg["context_length"], cfg["dropout"])
         self.ffn = FeedForward(cfg["emb_dim"])
 
     def forward(self, x):

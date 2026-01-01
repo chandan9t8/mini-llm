@@ -35,12 +35,10 @@ usually both are set equal to reduce the complexity of the code.
 **data preparation**
 token embedding layer : `vocab_size` x `emb_dim` 
 positional embedding layer : `context_length` x `emb_dim`
-after converting tokenIDs to embeddings, one more dimension gets added : [4, 256] -> [4, 256, 768]
-
 
 **multihead attention module**
-input - (`batch_size`, `max_length`, `emb_dims`)
-output - (`batch_size`, `max_length`, `emb_dims`)
+input - (`batch_size`, `max_length`, `emb_dim`)
+output - (`batch_size`, `max_length`, `emb_dim`)
 
 - weight matrices Q, K, V : `dim_in` x `dim_out`
     - `dim_in` --> `dims of the input token(token's embedding size)` 
@@ -49,23 +47,26 @@ output - (`batch_size`, `max_length`, `emb_dims`)
 - Q, K, V matrices
 
 **Layer Norm**
-input - (`batch_size`, `max_length`, `emb_dims`)
-output - (`batch_size`, `max_length`, `emb_dims`)
+input - (`batch_size`, `max_length`, `emb_dim`)
+output - (`batch_size`, `max_length`, `emb_dim`)
 
 **feed forward network**
-input - (`batch_size`, `max_length`, `emb_dims`)
-output - (`batch_size`, `max_length`, `emb_dims`)
+input - (`batch_size`, `max_length`, `emb_dim`)
+output - (`batch_size`, `max_length`, `emb_dim`)
 
 **Transformer block**
 layer norm -> MHA -> layer norm -> ffn
-input - (`batch_size`, `max_length`, `emb_dims`)
-output - (`batch_size`, `max_length`, `emb_dims`)
+input - (`batch_size`, `max_length`, `emb_dim`)
+output - (`batch_size`, `max_length`, `emb_dim`)
  
   
-  
-  
-  
-  
+**final linear layer**
+input - (`batch_size`, `max_length`, `emb_dim`)
+output - (`batch_size`, `emb_dim`, `vocab_size`)
+
+**Complete LLM**
+input - (`batch_size`, `max_size(or context_length)`)
+output - (`batch_size`, `context_length`, `vocab_size`)
   
   
   

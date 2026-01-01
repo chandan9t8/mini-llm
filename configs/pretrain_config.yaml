@@ -1,12 +1,12 @@
-dataset:
-  max_length: 256     #length of 1 training sample
-  stride: 128         #amount by which the window moves
-  batch_size: 4       #number of samples per batch
+#dataset
+max_length: 256     #length of 1 training sample
+stride: 128         #amount by which the window moves
+batch_size: 4       #number of samples per batch
 
-model:
-  vocab_size: 50257
-  emb_dim: 768
-  n_layers: 12
-  n_heads: 12
-  context_length: 256   #how many tokens the model can see
-  dropout: 0.1
+#model
+vocab_size: 50257
+emb_dim: 768
+n_layers: 12
+n_heads: 12
+context_length: 256   #how many tokens the model can see
+dropout: 0.1
