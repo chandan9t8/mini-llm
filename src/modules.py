@@ -108,3 +108,28 @@ class FeedForward(nn.Module):
 
     def forward(self, x):
         return self.layers(x)
+    
+class TransformerBlock(nn.Module):
+
+    def __init__(self, cfg):
+        super().__init__()
+        self.layer_norm1 = LayerNorm(cfg["emb_dim"])
+        self.layer_norm2 = LayerNorm(cfg["emb_dim"])
+        self.dropout = nn.Dropout(cfg["dropout"])
+        self.mha = MultiHeadAttention(cfg["n_heads"], cfg["dim_in"], cfg["dim_out"], cfg["context_length"], cfg["dropout"])
+        self.ffn = FeedForward(cfg["emb_dim"])
+
+    def forward(self, x):
+        shortcut = x
+        x = self.layer_norm1(x)
+        x = self.mha(x)
+        x = self.dropout(x)
+        x = x + shortcut
+
+        shortcut = x
+        x = self.layer_norm2(x)
+        x = self.ffn(x)
+        x = self.dropout(x)
+        x = x + shortcut
+
+        return x

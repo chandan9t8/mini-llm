@@ -55,6 +55,11 @@ output - (`batch_size`, `max_length`, `emb_dims`)
 **feed forward network**
 input - (`batch_size`, `max_length`, `emb_dims`)
 output - (`batch_size`, `max_length`, `emb_dims`)
+
+**Transformer block**
+layer norm -> MHA -> layer norm -> ffn
+input - (`batch_size`, `max_length`, `emb_dims`)
+output - (`batch_size`, `max_length`, `emb_dims`)
  
   
   
