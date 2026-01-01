@@ -30,7 +30,7 @@ DROPOUT = config['model']['dropout']
 
 def main():
     logger.info("Starting the mini LLM...")
-    logger.info("******************Starting data preparation pipeline******************")
+    logger.info("================== Starting data preparation pipeline ==================")
     try:
         # download data
         logger.info("Downloading data...")
@@ -40,7 +40,7 @@ def main():
         else:
             print("Data download failed.")
     except Exception as e:
-        logger.error(f"An error occurred during data download: {e}")
+        logger.error(f"Error occurred during data download: {e}")
 
     # read data
     try:
@@ -95,19 +95,6 @@ def main():
     logger.info(f"Val input embeddings shape: {val_input_embeddings.shape}")
 
     logger.info("******************* Data preparation pipeline completed successfully. *******************")
-
-    logger.info("****************** Creating MHA blocks ******************")
-    try:
-        mha = MultiHeadAttention(NUM_HEADS, EMB_DIM, EMB_DIM, CONTEXT_LENGTH, DROPOUT)
-        context_vector_training = mha(train_input_embeddings)
-        logger.info(f"training Context vector shape from MHA block: {context_vector_training.shape}")
-
-        context_vector_validation = mha(val_input_embeddings)
-        logger.info(f"validation Context vector shape from MHA block: {context_vector_validation.shape}")
-
-        logger.info("******************* MHA blocks created successfully. *******************")
-    except Exception as e:
-        logger.error(f"An error occurred during MHA blocks creation: {e}")
 
 
 if __name__ == "__main__":

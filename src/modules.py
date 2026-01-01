@@ -71,7 +71,20 @@ class MultiHeadAttention(nn.Module):
         context_vector = self.out_proj(context_vector)
 
         return context_vector
+    
+class LayerNorm(nn.Module):
 
+    def __init__(self, emb_dim):
+        super().__init__()
+        self.eps = 1e-5
+        self.scale = nn.Parameter(torch.ones(emb_dim))
+        self.shift = nn.Parameter(torch.zeros(emb_dim))   #scale and shift are learnable parameters
+
+    def forward(self, x):
+        mean = x.mean(-1, keepdim=True)
+        variance = x.var(-1, keepdim=True, unbiased=False)
+        x_norm = (x - mean) / torch.sqrt(variance + self.eps)
+        return self.scale * x_norm + self.shift
 
 
 

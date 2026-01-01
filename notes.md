@@ -11,7 +11,8 @@
 - convert tokenIDs to embedding vectors.
 
 `modules.py`
-- 
+- mha module
+- layer norm
 
 
 # Parameters and what they mean
@@ -38,12 +39,20 @@ after converting tokenIDs to embeddings, one more dimension gets added : [4, 256
 
 
 **multihead attention module**
+input - (`batch_size`, `max_length`, `emb_dims`)
+output - (`batch_size`, `max_length`, `emb_dims`)
+
 - weight matrices Q, K, V : `dim_in` x `dim_out`
     - `dim_in` --> `dims of the input token(token's embedding size)` 
     - `dim_out` --> `dims of output we want`
     - usually `dim_out = each head dim x num_heads`
-
 - Q, K, V matrices
+
+**Layer Norm**
+input - (`batch_size`, `max_length`, `emb_dims`)
+output - (`batch_size`, `max_length`, `emb_dims`)
+
+
  
   
   
