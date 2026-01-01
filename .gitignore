@@ -21,3 +21,6 @@ Thumbs.db
 
 # Ignore data files (if you don't want to track them)
 data/
+
+# test script for testing dims
+check_dims.py
