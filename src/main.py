@@ -1,9 +1,9 @@
 import torch
 import logging
 
-from data import *
+from data import download_data, read_data, split_data, create_dataloader
 from config_loader import config
-from modules import MultiHeadAttention
+from src.model import MiniLLM
 
 
 logging.basicConfig(
@@ -18,18 +18,18 @@ URL = ("https://raw.githubusercontent.com/rasbt/"
 "the-verdict.txt")
 FILE_PATH = "data/the-verdict.txt"
 
-MAX_LENGTH = config['dataset']['max_length']
-STRIDE = config['dataset']['stride']
-BATCH_SIZE = config['dataset']['batch_size']
+MAX_LENGTH = config['max_length']
+STRIDE = config['stride']
+BATCH_SIZE = config['batch_size']
 
-VOCAB_SIZE = config['model']['vocab_size']
-EMB_DIM = config['model']['emb_dim']
-CONTEXT_LENGTH = config['model']['context_length']
-NUM_HEADS = config['model']['n_heads']
-DROPOUT = config['model']['dropout']
+VOCAB_SIZE = config['vocab_size']
+EMB_DIM = config['emb_dim']
+CONTEXT_LENGTH = config['context_length']
+NUM_HEADS = config['n_heads']
+DROPOUT = config['dropout']
 
 def main():
-    logger.info("Starting the mini LLM...")
+    logger.info("================== Welcome to mini LLM ==================")
     logger.info("================== Starting data preparation pipeline ==================")
     try:
         # download data
@@ -71,31 +71,30 @@ def main():
         break
 
     # convert tokensIDs to embeddings
-    token_embedding_layer = torch.nn.Embedding(VOCAB_SIZE, EMB_DIM)
-    pos_embedding_layer = torch.nn.Embedding(CONTEXT_LENGTH, EMB_DIM)
+    # token_embedding_layer = torch.nn.Embedding(VOCAB_SIZE, EMB_DIM)
+    # pos_embedding_layer = torch.nn.Embedding(CONTEXT_LENGTH, EMB_DIM)
 
-    train_input_embeddings_list = []
-    for inputs, _ in train_loader:
-        token_embeddings = token_embedding_layer(inputs)
-        seq_length = inputs.size(1)
-        pos_indices = torch.arange(seq_length).unsqueeze(0)
-        positional_embeddings = pos_embedding_layer(pos_indices)
-        train_input_embeddings_list.append(token_embeddings + positional_embeddings)
-    train_input_embeddings = torch.cat(train_input_embeddings_list, dim=0)
-    logger.info(f"Train input embeddings shape: {train_input_embeddings.shape}")
+    # train_input_embeddings_list = []
+    # for inputs, _ in train_loader:
+    #     token_embeddings = token_embedding_layer(inputs)
+    #     seq_length = inputs.size(1)
+    #     pos_indices = torch.arange(seq_length).unsqueeze(0)
+    #     positional_embeddings = pos_embedding_layer(pos_indices)
+    #     train_input_embeddings_list.append(token_embeddings + positional_embeddings)
+    # train_input_embeddings = torch.cat(train_input_embeddings_list, dim=0)
+    # logger.info(f"Train input embeddings shape: {train_input_embeddings.shape}")
     
-    val_input_embeddings_list = []
-    for inputs, _ in val_loader:
-        token_embeddings = token_embedding_layer(inputs)
-        seq_length = inputs.size(1)
-        pos_indices = torch.arange(seq_length).unsqueeze(0)
-        positional_embeddings = pos_embedding_layer(pos_indices)
-        val_input_embeddings_list.append(token_embeddings + positional_embeddings)
-    val_input_embeddings = torch.cat(val_input_embeddings_list, dim=0)
-    logger.info(f"Val input embeddings shape: {val_input_embeddings.shape}")
+    # val_input_embeddings_list = []
+    # for inputs, _ in val_loader:
+    #     token_embeddings = token_embedding_layer(inputs)
+    #     seq_length = inputs.size(1)
+    #     pos_indices = torch.arange(seq_length).unsqueeze(0)
+    #     positional_embeddings = pos_embedding_layer(pos_indices)
+    #     val_input_embeddings_list.append(token_embeddings + positional_embeddings)
+    # val_input_embeddings = torch.cat(val_input_embeddings_list, dim=0)
+    # logger.info(f"Val input embeddings shape: {val_input_embeddings.shape}")
 
-    logger.info("******************* Data preparation pipeline completed successfully. *******************")
-
+    logger.info("==================== Data preparation pipeline completed successfully. ====================")
 
 if __name__ == "__main__":
     main()
