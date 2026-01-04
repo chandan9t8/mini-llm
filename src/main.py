@@ -5,6 +5,7 @@ from src.data import download_data, read_data, split_data, create_dataloader
 from src.config_loader import config
 from src.model import MiniLLM
 from src.generate import generate_text
+from src.train import calculate_loss_batch, calculate_loss_loader
 
 
 logging.basicConfig(
